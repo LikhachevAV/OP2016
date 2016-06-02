@@ -3,8 +3,9 @@ UNIT SortedCollection;
 INTERFACE
 USES Lexer;
              
-PROCEDURE PrintCollection();
+PROCEDURE PrintCollection(VAR F: TEXT);
 PROCEDURE Insert(Lexem: LexemType);
+PROCEDURE ClearCollection();
 
 IMPLEMENTATION
 
@@ -48,22 +49,40 @@ BEGIN{Insert}
   LocalInsert(Root, Lexem)
 END;{Insert} 
 
-PROCEDURE LocalPrintTree(Ptr: Tree);
+PROCEDURE LocalPrintTree(Ptr: Tree; VAR F: TEXT);
 BEGIN {LocalPrintTree}
   IF Ptr <> NIL
   THEN
     BEGIN
-      LocalPrintTree(Ptr^.LLink);
-      WRITE(Ptr^.Lexem, ' ', Ptr^.Count);
-      WRITELN;
-      LocalPrintTree(Ptr^.RLink)
+      LocalPrintTree(Ptr^.LLink, F);
+      WRITE(F, Ptr^.Lexem, ' ', Ptr^.Count);
+      WRITELN(F);
+      LocalPrintTree(Ptr^.RLink, F)
     END
 END; {LocalPrintTree}
 
-PROCEDURE PrintCollection();
+PROCEDURE PrintCollection(VAR F: TEXT);
 BEGIN{PrintCollection}
-  LocalPrintTree(Root)
+  REWRITE(F);
+  LocalPrintTree(Root, F);
+  CLOSE(F);
 END;{PrintCollection}
+
+PROCEDURE LocalClearCollection(Ptr: Tree);
+BEGIN{LocalClearCollection}
+  IF Ptr <> NIL
+  THEN
+    BEGIN
+      LocalClearCollection(Ptr^.LLink);
+      DISPOSE(Ptr);
+      LocalClearCollection(Ptr^.RLink)  
+    END;
+END;{LocalClearCollection}
+
+PROCEDURE ClearCollection();
+BEGIN{ClearCollection}
+  LocalClearCollection(Root)
+END;{ClearCollection}
 
 BEGIN{SortedCollection}
   Root := NIL

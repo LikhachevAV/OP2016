@@ -1,0 +1,16 @@
+a 2
+four 1
+one 1
+onedeficeafter 1
+onedeficebefore 1
+three 1
+two 1
+twodeficeafter 1
+twodeficebefore 1
+ё-моё 1
+всем 1
+за 2
+из 5
+из-за 1
+кое-как 1
+привет 1

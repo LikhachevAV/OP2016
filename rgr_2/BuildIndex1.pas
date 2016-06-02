@@ -22,9 +22,11 @@ BEGIN{ReadFileToCollection}
 END;{ReadFileToCollection}
 
 VAR
-  F: TEXT;
+  Fin, Fout: TEXT;
 BEGIN {BuildIndex1}
-  ASSIGN(F, 'F1.TXT');
-  ReadFileToCollection(F);
-  PrintCollection();  
+  ASSIGN(Fin, 'F1.TXT');
+  ASSIGN(Fout, 'F2.TXT');
+  ReadFileToCollection(Fin);
+  PrintCollection(Fout);  
+  ClearCollection();
 END. {BuildIndex1}
